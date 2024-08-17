@@ -1,14 +1,5 @@
 import reflex as rx
 from rxconfig import config
-import webbrowser
-
-class State(rx.State):
-    """The app state."""
-    email = "fefc2908@gmail.com"
-    
-    def send_mail(self):
-        webbrowser.open(f"mailto:{self.email}")
-    ...
 
 def index() -> rx.Component:
     return rx.container(
@@ -34,7 +25,7 @@ def index() -> rx.Component:
                         rx.badge("Git", size="2", variant="outline"),
                         rx.badge("MySQL", size="2", variant="outline"),
                         rx.badge("Access", size="2", variant="outline"),
-                        width="90%",
+                        width="80%",
                         spacing="2",
                         flex_wrap="wrap",
                         align="center",
@@ -68,13 +59,15 @@ Si te interesan mis servicios, no dudes en contactarme. 🚀
                 ),
                 rx.flex(
                     rx.hstack(
-                        rx.button(
-                            rx.icon(tag="mail"),
-                            "Contactar",
-                            size="3",
-                            variant="solid",
-                            cursor="pointer",
-                            on_click=State.send_mail,
+                        rx.link(
+                            rx.button(
+                                rx.icon(tag="mail"),
+                                "Contactar",
+                                size="3",
+                                variant="solid",
+                                cursor="pointer"
+                            ),
+                            href="mailto:fefc2908@gmail.com",
                         ),
                         rx.button(
                             rx.icon(tag="file-down"),
