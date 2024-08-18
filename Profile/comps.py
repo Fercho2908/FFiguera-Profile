@@ -92,7 +92,7 @@ def social_links():
         social_icon("Instagram", "https://instagram.com/fercho.2908"),
         spacing="2",
         padding=rx.breakpoints(
-            #initial="0.8em 0 0 0",
+            initial="0.8em 0 0 0",
             xs="0.8em 0 0 0",
             sm="0 1em 0 0"
         ),
