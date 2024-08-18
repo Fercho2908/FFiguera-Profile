@@ -87,7 +87,7 @@ def social_icon(icon, link):
     
 def social_links():
     return rx.hstack(
-        social_icon("github", "https://github.com/Fefc2908"),
+        social_icon("github", "https://github.com/fercho2908"),
         social_icon("Phone", "https://wa.me/584249246863"),
         social_icon("Instagram", "https://instagram.com/fercho.2908"),
         spacing="2",
