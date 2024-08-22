@@ -4,13 +4,14 @@ from Profile.comps import *
 
 def index() -> rx.Component:
     return rx.container(
+        select_language(),
         rx.flex(
             rx.vstack(
                 rx.center(
                     profile_image(),
                     width="100%"
                 ),
-                skills(),                
+                skills_cards(),
                 
                 bg="rgb(56,68,77)",
                 min_width="20em",
@@ -23,7 +24,7 @@ def index() -> rx.Component:
                 justify="center",
             ),
             rx.vstack(
-                profile_info(),
+                profile_description(),
                 rx.flex(
                     rx.hstack(
                         contact_button(),
@@ -51,7 +52,7 @@ def index() -> rx.Component:
             bg="rgb(29,42,53)",
             height="100%",
             min_width="70vw",
-            margin_top=rx.breakpoints(initial="2vh", xs="7vh", sm="13vh"),
+            margin_top=rx.breakpoints(initial="2vh", xs="2vh", sm="13vh"),
             margin_bottom="9vh",
             border_radius="1.5rem",
             direction=rx.breakpoints(
