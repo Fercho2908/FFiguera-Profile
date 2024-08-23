@@ -4,7 +4,7 @@ from Profile.comps import *
 
 def index() -> rx.Component:
     return rx.container(
-        select_language(),
+        container_language(),
         rx.flex(
             rx.vstack(
                 rx.center(

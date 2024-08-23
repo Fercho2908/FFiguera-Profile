@@ -1,5 +1,6 @@
 import reflex as rx
 import googletrans
+import asyncio
 
 PROFILE_INFO = [
     "¡Hola👋🏽, bienvenido a mi página web!",
@@ -16,29 +17,49 @@ UI_TEXT = [
 
 SKILLS = ["Python", "Java", "C#", "Visual Basic", "Git", "MySQL", "Access"]
 translator = googletrans.Translator()
-
 class State(rx.State):
     skills = SKILLS.copy()
     profile_info = PROFILE_INFO.copy()
     ui_text = UI_TEXT.copy()
-    language: str = "es"
+    language:str = "es"
+    show_loading: bool = False
     
+    def change_loading(self):
+        self.show_loading = not self.show_loading
+        
     def translate_text(self, text: str) -> str:
         return translator.translate(text, dest=self.language).text
     
-    def translate(self):
-        self.language = "es" if self.language == "en" else "en"
-        self.profile_info = [self.translate_text(text) for text in self.profile_info]
-        self.ui_text = [self.translate_text(text) for text in self.ui_text]
+    @rx.background
+    async def translate(self):
+        async with self:
+            self.change_loading()
+        
+        async with self:
+            self.language = "es" if self.language == "en" else "en"
+            self.profile_info = [self.translate_text(text) for text in self.profile_info]
+            self.ui_text = [self.translate_text(text) for text in self.ui_text]
+        await asyncio.sleep(0.0001)
+            
+        async with self:
+            self.change_loading()
+        
 
 def select_language():
+    return rx.select(
+        ["Español", "English"],
+        default_value="Español",
+        on_change= lambda e: State.translate()
+    )
+
+def container_language():
     return rx.hstack(
-        rx.icon(tag="languages"),
-        rx.select(
-            ["Español", "English"],
-            default_value="Español",
-            on_change= State.translate()
+        rx.cond(
+            State.show_loading,
+            rx.spinner(loading=True, size="3"), 
+            rx.icon(tag="languages"),
         ),
+        select_language(),
         width="100%",
         align="center",
         justify="end"
@@ -130,7 +151,6 @@ def social_links():
         padding=rx.breakpoints(
             initial="0.8em 0 0 0",
             xs="0.8em 0 0 0",
-            sm="0 1em 0 0"
+            sm="0 0.2em 0 0"
         ),
-        padding_right="1em"
     )
