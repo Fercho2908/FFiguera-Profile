@@ -1,5 +1,5 @@
 import reflex as rx
-import googletrans
+from deep_translator import GoogleTranslator
 import asyncio
 
 PROFILE_INFO = [
@@ -16,7 +16,7 @@ UI_TEXT = [
 ]
 
 SKILLS = ["Python", "Java", "C#", "Visual Basic", "Git", "MySQL", "Access"]
-translator = googletrans.Translator()
+translator = GoogleTranslator(source="auto")
 class State(rx.State):
     skills = SKILLS.copy()
     profile_info = PROFILE_INFO.copy()
@@ -28,7 +28,8 @@ class State(rx.State):
         self.show_loading = not self.show_loading
         
     def translate_text(self, text: str) -> str:
-        return translator.translate(text, dest=self.language).text
+        translator.target = self.language
+        return translator.translate(text)
     
     @rx.background
     async def translate(self):
