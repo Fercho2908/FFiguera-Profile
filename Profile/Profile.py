@@ -4,6 +4,7 @@ from Profile.comps import *
 
 def index() -> rx.Component:
     return rx.container(
+        rx.script("document.documentElement.lang='es'"),
         container_language(),
         rx.flex(
             rx.vstack(
@@ -68,4 +69,14 @@ app = rx.App(
         appearance="dark",
     )
 )
-app.add_page(index)
+
+app.add_page(
+    index,
+    title = "Fernando Figuera | Informático y desarrollador",
+    description = "Hola, soy Fernando Figuera, Técnico Superior Universitario y estudiante de Ingeniería en Sistemas.",
+    meta = [
+        {"name": "og:type", "content": "website"},
+        {"name": "og:title", "content": "Fernando Figuera | Informático y desarrollador"},
+        {"name": "og:description", "content": "Hola, soy Fernando Figuera, Técnico Superior Universitario y estudiante de Ingeniería en Sistemas."},
+    ]
+)
